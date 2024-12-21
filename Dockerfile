@@ -10,6 +10,9 @@ COPY requirements.txt ./
 # Install the required Python packages.
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Get FFMPEG
+RUN apt-get install -y ffmpeg
+
 # Now copy the rest of the Botto code into the container.
 COPY . .
 

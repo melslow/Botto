@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 class ChatCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.openai_client = openai.OpenAI(api_key=bot.openai_api_key)
+        self.openai_client = openai.OpenAI(api_key=bot.config["OPENAI_API_KEY"])
 
     @commands.command(name="chat")
     async def chat(self, ctx, *, prompt: str):
