@@ -32,8 +32,8 @@ jobs:
         context: .
         push: true
         tags: |
-          ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-          ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.extract-version.outputs.tag }}
+          ghcr.io/${{ github.repository_owner }}/botto:latest
+          ghcr.io/${{ github.repository_owner }}/botto:${{ steps.extract-version.outputs.tag }}
 
     - name: Logout from GitHub Container Registry
       run: docker logout
