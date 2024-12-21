@@ -11,6 +11,8 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Get FFMPEG
+RUN apt-get -y update
+RUN apt-get -y upgrade
 RUN apt-get install -y ffmpeg
 
 # Now copy the rest of the Botto code into the container.
