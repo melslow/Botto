@@ -19,13 +19,44 @@ class LingoCog(commands.Cog):
 
         # A small list of 5-letter words you can guess from;
         # replace or expand as desired.
-        self.word_list = [
-            "apple", "brain", "chair", "drive", "eager",
-            "flame", "grape", "house", "image", "joker",
-            "knock", "light", "mouth", "night", "ocean",
-            "proud", "queen", "robot", "sugar", "tiger",
-            "urban", "vivid", "water", "xenon", "young", "zebra"
-        ]
+        self.word_list = five_letter_words = [
+            "apple", "bread", "chair", "dance", "earth", "field", "grape", "house", "index", "jumps",
+            "knife", "liver", "mouse", "night", "ocean", "piano", "queen", "river", "snake", "table",
+            "uncle", "voice", "water", "xenon", "yacht", "zebra", "actor", "beach", "candy", "drive",
+            "eagle", "flute", "glove", "heart", "image", "joker", "karma", "lemon", "mango", "noble",
+            "opera", "paint", "quiet", "robin", "sugar", "tiger", "urban", "vivid", "witty", "youth",
+            "abode", "brush", "crisp", "dodge", "evoke", "frail", "giant", "hoist", "ideal", "jolly",
+            "knack", "linen", "minor", "naive", "obese", "pouch", "quilt", "rider", "spine", "trout",
+            "umbra", "vague", "whirl", "yield", "zones", "align", "badge", "chase", "dwarf", "erase",
+            "froth", "hinge", "infer", "joust", "lapse", "melon", "nudge", "octet", "pluck", "quake",
+            "relic", "shade", "thorn", "unify", "vocal", "whale", "yeast", "zesty", "adapt", "banjo",
+            "chime", "drill", "envoy", "feast", "gleam", "horse", "imply", "jaded", "kiosk", "logic",
+            "moist", "novel", "oxide", "petal", "quasi", "rugby", "sweat", "torch", "ultra", "value",
+            "wheel", "yarns", "zoned", "abide", "broth", "cliff", "donor", "exile", "frank", "glint",
+            "haste", "irate", "kneel", "laser", "medic", "nerve", "orbit", "plaza", "quirk", "saber",
+            "skate", "taunt", "vista", "wedge", "yummy", "amber", "bland", "chant", "doubt", "edict",
+            "flick", "grand", "harsh", "irony", "joint", "khaki", "locus", "meant", "optic", "pearl",
+            "query", "rival", "sheep", "tweak", "upset", "vigor", "weary", "zones", "align", "brief",
+            "charm", "deter", "exult", "flock", "graft", "ivory", "juice", "lyric", "model", "onion",
+            "pivot", "react", "shine", "tribe", "vowel", "wrath", "alert", "bison", "crate", "dizzy",
+            "embed", "flock", "grove", "input", "motto", "olive", "quark", "squad", "thief", "under",
+            "wharf", "zebra", "arise", "blend", "craft", "dream", "evoke", "flint", "guard", "humor",
+            "jewel", "known", "light", "pride", "rapid", "skirt", "tiger", "urban", "witty", "zones",
+            "angel", "brace", "chief", "drain", "flora", "grape", "honey", "joker", "local", "ninth",
+            "piano", "ridge", "spice", "torch", "valve", "yield", "alert", "banjo", "chant", "dense",
+            "frost", "grain", "heist", "jazzy", "limit", "macho", "orbit", "quote", "rugby", "shock",
+            "ulcer", "woven", "angle", "baker", "charm", "drama", "fable", "grain", "ivory", "kneel",
+            "magic", "pouch", "raven", "shine", "trail", "usher", "vivid", "watch", "yummy", "zones",
+            "amber", "brisk", "chant", "error", "flick", "grand", "input", "joker", "money", "nerve",
+            "plume", "query", "ranch", "shrub", "tight", "unity", "vocal", "worry", "zones", "angle",
+            "beach", "dream", "extra", "flame", "hatch", "ivory", "jumps", "kneel", "logic", "minor",
+            "optic", "prism", "quote", "saber", "sweep", "treat", "viper", "woven", "zones", "adore",
+            "boost", "craft", "drawn", "flour", "grind", "jazzy", "linen", "mirth", "noble", "olive",
+            "plaza", "rider", "shift", "squad", "under", "vivid", "whale", "zones", "bland", "crisp",
+            "dodge", "froth", "glove", "horse", "kiosk", "macho", "novel", "quilt", "spine", "taunt",
+            "vocal", "youth", "align", "crash", "frost", "irate", "lapse", "moist", "quirk", "thief",
+            "value", "zones"]
+
 
     def get_feedback(self, guess: str, target: str) -> str:
         """
