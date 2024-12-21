@@ -24,6 +24,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 # 5. Define which cogs to load on startup
 COGS = ["lingo_cog"]
+COGS = ['chat_cog']
 
 @bot.event
 async def on_ready():
