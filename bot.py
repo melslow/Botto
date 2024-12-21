@@ -8,6 +8,7 @@ from dotenv import load_dotenv  # Only needed if you use .env
 # 1. Load environment variables (if using .env)
 load_dotenv()  # Reads .env if it exists
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # 2. Set up logging
 logging.basicConfig(
@@ -21,6 +22,7 @@ intents.message_content = True
 
 # 4. Initialize bot with command prefix and intents
 bot = commands.Bot(command_prefix="!", intents=intents)
+bot.openai_api_key = OPENAI_API_KEY
 
 # 5. Define which cogs to load on startup
 COGS = ["lingo_cog",'chat_cog','music_cog']

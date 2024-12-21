@@ -3,13 +3,10 @@ import openai
 from discord.ext import commands
 from dotenv import load_dotenv
 
-load_dotenv()
-openai_api_key = os.getenv('OPENAI_API_KEY')
-
 class ChatCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.openai_client = openai.OpenAI(api_key=openai_api_key)
+        self.openai_client = openai.OpenAI(api_key=bot.openai_api_key)
 
     @commands.command(name="chat")
     async def chat(self, ctx, *, prompt: str):
