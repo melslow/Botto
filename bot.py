@@ -1,3 +1,4 @@
+import asyncio
 import os
 import logging
 import discord
@@ -22,18 +23,21 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # 5. Define which cogs to load on startup
-COGS = ["sample_cog"]
+COGS = ["lingo_cog"]
 
 @bot.event
 async def on_ready():
     logging.info(f"Bot is online! Logged in as: {bot.user} (ID: {bot.user.id})")
     logging.info("------")
+    for guild in bot.guilds:
+        logging.info("Joined: {}, Guild_id: {}".format(guild,guild.id))
+        await bot.tree.sync(guild=discord.Object(id=guild.id))
 
-def main():
+async def main():
     # Load cogs
     for cog in COGS:
         try:
-            bot.load_extension(f"cogs.{cog}")
+            await bot.load_extension(f"cogs.{cog}")
             logging.info(f"Loaded cog: {cog}")
         except Exception as e:
             logging.error(f"Failed to load cog {cog}: {e}")
@@ -42,7 +46,7 @@ def main():
     if not TOKEN:
         logging.error("DISCORD_BOT_TOKEN environment variable not set.")
         return
-    bot.run(TOKEN)
+    await bot.start(TOKEN)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
