@@ -30,7 +30,7 @@ bot.config = {
 
 
 # 5. Define which cogs to load on startup
-COGS = ["lingo_cog",'chat_cog','music_cog','pexels_cog', "tts_cog"]
+COGS = ["lingo_cog",'chat_cog','music_cog','pexels_cog', "tts_cog", "tft_cog"]
 
 @bot.event
 async def on_ready():
