@@ -38,7 +38,7 @@ class TFTStats(commands.Cog):
             """
         ).format(results=results)
     
-        response = await self.openai_client.chat.completions.create(
+        response = self.openai_client.chat.completions.create(
             messages=[{"role": "system", "content": "You are an expert at summarizing data."}, {"role": "user", "content": prompt}],
             model="gpt-4o-mini"
         )
