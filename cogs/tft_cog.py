@@ -43,7 +43,7 @@ class TFTStats(commands.Cog):
             model="gpt-4o-mini"
         )
     
-        return response["choices"][0]["message"]["content"]
+        return response.choices[0].message.content
 
     @commands.command()
     async def tftstats(self, ctx, game_name: str, tag_line: str):
