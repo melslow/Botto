@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import aiohttp
 import os
-import openai
+from openai import OpenAI
 
 # Riot API setup
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")  # Store your API key securely
@@ -10,13 +10,14 @@ BASE_URL = "https://euw1.api.riotgames.com"
 REGION = "europe"  # Adjust region as needed
 ACCOUNT_BASE_URL = "https://europe.api.riotgames.com"
 
+
 # OpenAI API setup
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Store your OpenAI API key securely
-openai.api_key = OPENAI_API_KEY
 
 class TFTStats(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     async def fetch_data(self, url):
         """Fetch data from Riot API."""
@@ -36,12 +37,12 @@ class TFTStats(commands.Cog):
             {results}
             """
         ).format(results=results)
-
-        response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "system", "content": "You are an expert at summarizing data."}, {"role": "user", "content": prompt}]
+    
+        response = await self.openai_client.chat.completions.create(
+            messages=[{"role": "system", "content": "You are an expert at summarizing data."}, {"role": "user", "content": prompt}],
+            model="gpt-4o-mini"
         )
-
+    
         return response["choices"][0]["message"]["content"]
 
     @commands.command()
