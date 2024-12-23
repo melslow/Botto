@@ -8,6 +8,7 @@ import openai
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")  # Store your API key securely
 BASE_URL = "https://euw1.api.riotgames.com"
 REGION = "europe"  # Adjust region as needed
+ACCOUNT_BASE_URL = "https://europe.api.riotgames.com"
 
 # OpenAI API setup
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Store your OpenAI API key securely
@@ -44,25 +45,24 @@ class TFTStats(commands.Cog):
         return response["choices"][0]["message"]["content"]
 
     @commands.command()
-    async def tftstats(self, ctx, summoner_name):
-        """Fetch the latest 5 TFT matches for a given summoner."""
-        # Step 1: Get Summoner ID
-        summoner_url = f"{BASE_URL}/lol/summoner/v4/summoners/by-name/{summoner_name}"
-        summoner_data = await self.fetch_data(summoner_url)
+    async def tftstats(self, ctx, game_name: str, tag_line: str):
+        """Fetch the latest 5 TFT matches for a given Riot ID."""
+        # Step 1: Get Account Data Using Riot ID
+        account_url = f"{ACCOUNT_BASE_URL}/riot/account/v1/accounts/by-riot-id/{game_name}/{tag_line}"
+        account_data = await self.fetch_data(account_url)
 
-        if not summoner_data:
-            await ctx.send(f"Could not find summoner: {summoner_name}")
+        if not account_data:
+            await ctx.send(f"Could not find account with Riot ID: {game_name}#{tag_line}")
             return
 
-        summoner_id = summoner_data.get("id")
-        puuid = summoner_data.get("puuid")
+        puuid = account_data.get("puuid")
 
         # Step 2: Get Match History
         match_url = f"https://{REGION}.api.riotgames.com/tft/match/v1/matches/by-puuid/{puuid}/ids?count=5"
         match_ids = await self.fetch_data(match_url)
 
         if not match_ids:
-            await ctx.send(f"Could not retrieve matches for summoner: {summoner_name}")
+            await ctx.send(f"Could not retrieve matches for Riot ID: {game_name}#{tag_line}")
             return
 
         # Step 3: Fetch Match Details
@@ -91,7 +91,7 @@ class TFTStats(commands.Cog):
         if results:
             summary = await self.generate_summary(results)
 
-            embed = discord.Embed(title=f"Latest TFT Matches for {summoner_name}", color=discord.Color.blue())
+            embed = discord.Embed(title=f"Latest TFT Matches for Riot ID: {game_name}#{tag_line}", color=discord.Color.blue())
             embed.add_field(name="Performance Summary", value=summary, inline=False)
 
             for idx, result in enumerate(results, start=1):
@@ -105,7 +105,7 @@ class TFTStats(commands.Cog):
 
             await ctx.send(embed=embed)
         else:
-            await ctx.send(f"No match details available for summoner: {summoner_name}")
+            await ctx.send(f"No match details available for Riot ID: {game_name}#{tag_line}")
 
 # Setup bot
 async def setup(bot):
